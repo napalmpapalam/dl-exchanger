@@ -12,4 +12,9 @@
   text-align: center;
   color: #2c3e50;
 }
+@media only screen and (max-width: 620px) {
+  #app {
+    font-size: 0.8rem;
+  }
+}
 </style>
