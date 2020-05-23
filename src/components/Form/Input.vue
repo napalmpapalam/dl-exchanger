@@ -1,7 +1,7 @@
 <template>
   <div class="input">
     <md-field>
-      <label>Сумма в BTC</label>
+      <label>Сумма в {{ labelText }}</label>
       <md-input type="number"></md-input>
     </md-field>
   </div>
@@ -9,6 +9,7 @@
 
 <script>
 export default {
+  props: ["labelText"],
   name: "Input",
   data: () => ({
     type: null,

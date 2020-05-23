@@ -1,9 +1,9 @@
 <template>
   <div class="content">
     <h1>Обменник</h1>
-    <Form />
+    <Form v-bind:selectedCurrencies="selectedCurrencies" />
     <SumbitButton />
-    <CurrencyInfo />
+    <CurrencyInfo v-bind:selectedCurrencies="selectedCurrencies" />
   </div>
 </template>
 
@@ -13,6 +13,14 @@ import CurrencyInfo from "@/components/CurrencyInfo.vue";
 import SumbitButton from "@/components/SumbitButton.vue";
 
 export default {
+  data: function() {
+    return {
+      selectedCurrencies: {
+        client: "",
+        service: ""
+      }
+    };
+  },
   components: {
     Form,
     CurrencyInfo,

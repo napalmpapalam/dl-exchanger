@@ -2,7 +2,13 @@
   <div class="md-layout-item">
     <md-field>
       <label for="currency">{{ labelText }}</label>
-      <md-select name="currency" id="currency" placeholder="BTC">
+      <md-select
+        v-model="currency"
+        name="currency"
+        id="currency"
+        placeholder="BTC"
+        @md-selected="select(currency)"
+      >
         <md-option value="BTC">BTC</md-option>
         <md-option value="UAH">UAH</md-option>
         <md-option value="EUR">EUR</md-option>
@@ -14,7 +20,22 @@
 
 <script>
 export default {
-  props: ["labelText"]
+  data() {
+    return {
+      currency: "",
+      arr: []
+    };
+  },
+  props: ["labelText", "selectedCurrencies"],
+  methods: {
+    select: function() {
+      if (this.labelText == "Отдаете") {
+        this.selectedCurrencies.client = this.currency;
+      } else {
+        this.selectedCurrencies.service = this.currency;
+      }
+    }
+  }
 };
 </script>
 
