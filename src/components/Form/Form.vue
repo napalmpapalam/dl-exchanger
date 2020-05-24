@@ -1,16 +1,10 @@
 <template>
   <div class="form">
-    <SelectCurrency
-      v-bind:selectedCurrencies="selectedCurrencies"
-      labelText="Отдаете"
-    />
-    <Input :labelText="selectedCurrencies.client" />
+    <SelectCurrency :db="db" labelText="Отдаете" />
+    <Input :labelText="db.selected.client" />
     <SwitchButton />
-    <SelectCurrency
-      v-bind:selectedCurrencies="selectedCurrencies"
-      labelText="Получаете"
-    />
-    <Input :labelText="selectedCurrencies.service" />
+    <SelectCurrency :db="db" labelText="Получаете" />
+    <Input :labelText="db.selected.service" />
   </div>
 </template>
 
@@ -20,7 +14,7 @@ import Input from "@/components/Form/Input.vue";
 import SwitchButton from "@/components/Form/SwitchButton.vue";
 
 export default {
-  props: ["selectedCurrencies"],
+  props: ["db"],
   components: {
     SelectCurrency,
     Input,

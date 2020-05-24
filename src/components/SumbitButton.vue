@@ -1,6 +1,8 @@
 <template>
   <span>
-    <md-button class="md-raised" disabled>Disabled</md-button>
+    <router-link to="/success" tag="md-button" class="md-raised" disabled
+      >УКАЖИТЕ СУММУ</router-link
+    >
   </span>
 </template>
 

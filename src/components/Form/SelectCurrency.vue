@@ -9,10 +9,9 @@
         placeholder="BTC"
         @md-selected="select(currency)"
       >
-        <md-option value="BTC">BTC</md-option>
-        <md-option value="UAH">UAH</md-option>
-        <md-option value="EUR">EUR</md-option>
-        <md-option value="ETH">ETH</md-option>
+        <md-option v-for="item in db.currencies" :key="item" :value="item">
+          {{ item }}
+        </md-option>
       </md-select>
     </md-field>
   </div>
@@ -22,17 +21,16 @@
 export default {
   data() {
     return {
-      currency: "",
-      arr: []
+      currency: ""
     };
   },
-  props: ["labelText", "selectedCurrencies"],
+  props: ["labelText", "db"],
   methods: {
     select: function() {
       if (this.labelText == "Отдаете") {
-        this.selectedCurrencies.client = this.currency;
+        this.db.selected.client = this.currency;
       } else {
-        this.selectedCurrencies.service = this.currency;
+        this.db.selected.service = this.currency;
       }
     }
   }
