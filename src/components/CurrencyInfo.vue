@@ -2,20 +2,22 @@
   <div class="info">
     <div class="info__into">
       <div class="info__text">
-        <strong v-if="db.selected.client && db.selected.service">
+        <strong v-if="getClientCurrencyID && getServiceCurrencyID">
           <p>Курс</p>
           <p>
-            1 {{ db.selected.client }} =
-            {{ db.info[db.selected.client][db.selected.service] }}
-            {{ db.selected.service }}
+            1 {{ getClientCurrencyID }} =
+            {{ allCurrencies[getClientCurrencyID][getServiceCurrencyID] }}
+            {{ getServiceCurrencyID }}
           </p>
         </strong>
       </div>
 
       <div class="info__text">
-        <strong v-if="db.selected.service">
+        <strong v-if="getServiceCurrencyID">
           <p>Резерв</p>
-          <p>{{ db.reserve[db.selected.service] }} {{ db.selected.service }}</p>
+          <p>
+            {{ getReserve[getServiceCurrencyID] }} {{ getServiceCurrencyID }}
+          </p>
         </strong>
       </div>
     </div>
@@ -23,8 +25,16 @@
 </template>
 
 <script>
+import { mapGetters } from "vuex";
 export default {
-  props: ["db"]
+  computed: {
+    ...mapGetters([
+      "getClientCurrencyID",
+      "getServiceCurrencyID",
+      "allCurrencies",
+      "getReserve"
+    ])
+  }
 };
 </script>
 
@@ -36,7 +46,7 @@ export default {
   font-size: 1rem;
 }
 .info__text {
-  width: 10rem;
+  width: 13rem;
 }
 .info__into {
   display: flex;

@@ -7,33 +7,45 @@
         name="currency"
         id="currency"
         placeholder="BTC"
-        @md-selected="select(currency)"
+        required
       >
-        <md-option v-for="item in db.currencies" :key="item" :value="item">
-          {{ item }}
-        </md-option>
+        <md-option v-for="item in allCurrenciesID" :key="item" :value="item">{{
+          item
+        }}</md-option>
       </md-select>
     </md-field>
   </div>
 </template>
 
 <script>
+import { mapGetters } from "vuex";
 export default {
-  data() {
-    return {
-      currency: ""
-    };
-  },
-  props: ["labelText", "db"],
-  methods: {
-    select: function() {
-      if (this.labelText == "Отдаете") {
-        this.db.selected.client = this.currency;
-      } else {
-        this.db.selected.service = this.currency;
+  computed: {
+    ...mapGetters([
+      "allCurrenciesID",
+      "getClientCurrencyID",
+      "getServiceCurrencyID"
+    ]),
+
+    currency: {
+      get: function() {
+        if (this.labelText === "Отдаете") {
+          return this.getClientCurrencyID;
+        } else {
+          return this.getServiceCurrencyID;
+        }
+      },
+      set: function(val) {
+        if (this.labelText == "Отдаете") {
+          this.$store.commit("updateClientCurrencyID", val);
+        } else {
+          this.$store.commit("updateServiceCurrencyID", val);
+        }
       }
     }
-  }
+  },
+
+  props: ["labelText"]
 };
 </script>
 

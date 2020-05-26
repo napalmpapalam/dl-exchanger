@@ -1,10 +1,10 @@
 <template>
   <div class="form">
-    <SelectCurrency :db="db" labelText="Отдаете" />
-    <Input :labelText="db.selected.client" />
+    <SelectCurrency labelText="Отдаете" />
+    <Input isReceiver="false" />
     <SwitchButton />
-    <SelectCurrency :db="db" labelText="Получаете" />
-    <Input :labelText="db.selected.service" />
+    <SelectCurrency labelText="Получаете" />
+    <Input isReceiver="true" />
   </div>
 </template>
 
@@ -12,9 +12,12 @@
 import SelectCurrency from "@/components/Form/SelectCurrency.vue";
 import Input from "@/components/Form/Input.vue";
 import SwitchButton from "@/components/Form/SwitchButton.vue";
+import { mapGetters } from "vuex";
 
 export default {
-  props: ["db"],
+  computed: {
+    ...mapGetters(["allCurrencies", "allCurrenciesID"])
+  },
   components: {
     SelectCurrency,
     Input,

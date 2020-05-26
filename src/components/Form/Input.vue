@@ -1,20 +1,43 @@
 <template>
   <div class="input">
-    <md-field>
-      <label>Сумма в {{ labelText }}</label>
+    <md-field v-model="hasErrors" :class="errorsClass">
+      <label>
+        Сумма в
+        {{ isReceiver === "true" ? serviceCurrencyID : clientCurrencyID }}
+      </label>
+
       <md-input type="number"></md-input>
+
+      <span class="md-error">There is an error</span>
     </md-field>
   </div>
 </template>
 
 <script>
+import { mapGetters } from "vuex";
 export default {
-  props: ["labelText"],
-  name: "Input",
+  props: ["labelText", "isReceiver"],
   data: () => ({
-    type: null,
-    number: null
-  })
+    hasErrors: false
+  }),
+  computed: {
+    ...mapGetters(["getClientCurrencyID", "getServiceCurrencyID"]),
+    clientCurrencyID: {
+      get: function() {
+        return this.getClientCurrencyID;
+      }
+    },
+    serviceCurrencyID: {
+      get: function() {
+        return this.getServiceCurrencyID;
+      }
+    },
+    errorsClass() {
+      return {
+        "md-invalid": this.hasErrors
+      };
+    }
+  }
 };
 </script>
 

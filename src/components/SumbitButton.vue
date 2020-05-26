@@ -1,6 +1,11 @@
 <template>
   <span>
-    <router-link to="/success" tag="md-button" class="md-raised" disabled
+    <router-link
+      to="/success"
+      tag="md-button"
+      class="md-raised"
+      disabled
+      type="submit"
       >УКАЖИТЕ СУММУ</router-link
     >
   </span>

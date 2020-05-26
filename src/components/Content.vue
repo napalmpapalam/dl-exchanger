@@ -1,10 +1,10 @@
 <template>
-  <div class="content">
+  <form class="content">
     <h1>Обменник</h1>
-    <Form :db="db" />
+    <Form />
     <SumbitButton />
-    <CurrencyInfo :db="db" />
-  </div>
+    <CurrencyInfo />
+  </form>
 </template>
 
 <script>
@@ -13,10 +13,6 @@ import CurrencyInfo from "@/components/CurrencyInfo.vue";
 import SumbitButton from "@/components/SumbitButton.vue";
 
 export default {
-  props: ["db"],
-  data: function() {
-    return {};
-  },
   components: {
     Form,
     CurrencyInfo,
