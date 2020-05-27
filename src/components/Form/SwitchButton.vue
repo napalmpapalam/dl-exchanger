@@ -9,12 +9,6 @@
 <script>
 import { mapGetters } from "vuex";
 export default {
-  // data: function() {
-  //   return {
-  //     type: null,
-  //     button: null
-  //   };
-  // },
   computed: {
     ...mapGetters([
       "allCurrencies",

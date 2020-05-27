@@ -33,7 +33,8 @@ export default {
       "getInputValue",
       "getConvertedValue",
       "getValidationState",
-      "getReserve"
+      "getReserve",
+      "getServiceValue"
     ]),
     messageClass() {
       return {
@@ -45,74 +46,65 @@ export default {
     },
     inputValue: {
       get: function() {
-        if (typeof this.getInputValue == "number") {
-          // return value type number
-          return this.getInputValue;
-        } else {
-          // parsing string value from vuex state to number type
-          let result = parseFloat(this.getInputValue);
-          if (isNaN(result) || !result) {
-            return null;
-          }
-
-          return result;
-        }
+        return this.getInputValue;
       },
       set: function(input) {
+        let number = +input;
+        let client = this.getClientCurrencyID;
         let service = this.getServiceCurrencyID;
 
-        if (
-          isNaN(input) ||
-          input < 0 ||
-          !input ||
-          this.getConvertedValue > this.getReserve[service]
-        ) {
+        let rate = this.allCurrencies[client][service];
+        let convertedValue = +(number * rate).toFixed(2);
+        //validation
+        if (isNaN(number) || number <= 0 || !number) {
           this.$store.commit("updateValidationState", false);
-          this.$store.commit("updateInputValue", input);
-          return input;
-        } else {
-          let result = +input;
-          this.$store.commit("updateInputValue", +result.toFixed(2));
-          if (
-            this.getClientCurrencyID &&
-            this.getServiceCurrencyID &&
-            result > 0
-          ) {
-            this.$store.commit("updateValidationState", true);
-          }
+        } else if (this.getConvertedValue > this.getReserve[service]) {
+          this.$store.commit("updateValidationState", false);
+        } else if (this.getConvertedValue < this.getReserve[service]) {
+          this.$store.commit("updateValidationState", true);
+        }
+        // if all valid return result
+        let result = Math.floor(+number.toFixed(2));
+
+        if (!isNaN(number) && number > 0 && number) {
+          this.$store.commit("updateInputValue", result);
+          this.$store.commit("updateServiceValue", convertedValue);
+        }
+        // if input is empty return 0
+        if (number === 0 || number === "") {
+          this.$store.commit("updateInputValue", 0);
+          this.$store.commit("updateServiceValue", 0);
         }
       }
     },
     convertedValue: {
       get: function() {
-        if (this.getClientCurrencyID && this.getServiceCurrencyID) {
-          return this.getConvertedValue;
-        }
-        return console.log("nothing");
+        return this.getServiceValue;
       },
       set: function(input) {
-        // if input value is NaN return and set isValidated to false
-        if (isNaN(input) || input < 0 || !input) {
-          this.$store.commit("updateValidationState", false);
-          this.$store.commit("updateInputValue", input);
-          return input;
-        }
+        let number = +input;
         let client = this.getClientCurrencyID;
         let service = this.getServiceCurrencyID;
-
-        if (client && service && input > 0) {
-          let rate = this.allCurrencies[client][service];
-          let reverseConvertedValue = input / rate;
-          let result = +reverseConvertedValue.toFixed(2);
-          //---------------------
-          this.$store.commit("updateInputValue", result);
+        let rate = this.allCurrencies[client][service];
+        let reverseConvertedValue = +(number / rate).toFixed(2);
+        //validation
+        if (isNaN(number) || number <= 0 || !number) {
+          this.$store.commit("updateValidationState", false);
+        } else if (this.getConvertedValue > this.getReserve[service]) {
+          this.$store.commit("updateValidationState", false);
+        } else if (this.getConvertedValue < this.getReserve[service]) {
           this.$store.commit("updateValidationState", true);
+        }
+        // if all valid return result
+        let result = reverseConvertedValue;
 
-          // check if converted value bigger then reserve value
-          if (input > this.getReserve[service]) {
-            this.$store.commit("updateValidationState", false);
-          }
-          return result;
+        if (!isNaN(number) && number > 0 && number) {
+          this.$store.commit("updateInputValue", result);
+          this.$store.commit("updateServiceValue", number);
+        }
+        // if input is empty return 0
+        if (number === 0 || number === "") {
+          this.$store.commit("updateInputValue", 0);
         }
       }
     }

@@ -35,6 +35,9 @@ export default new Vuex.Store({
     updateInputValue(state, inputValue) {
       state.inputValue = inputValue;
     },
+    updateServiceValue(state, inputValue) {
+      state.serviceValue = inputValue;
+    },
     updateValidationState(state, boolean) {
       state.isValidated = boolean;
     }
@@ -45,6 +48,7 @@ export default new Vuex.Store({
     clientCurrencyID: "",
     serviceCurrencyID: "",
     inputValue: "",
+    serviceValue: "",
     isValidated: null,
     reserve: {
       BTC: 4.1,
@@ -84,6 +88,9 @@ export default new Vuex.Store({
     },
     getValidationState(state) {
       return state.isValidated;
+    },
+    getServiceValue(state) {
+      return state.serviceValue;
     }
   }
 });
