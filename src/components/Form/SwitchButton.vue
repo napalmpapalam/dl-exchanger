@@ -26,4 +26,10 @@ export default {
 span:hover {
   cursor: pointer;
 }
+
+@media only screen and (max-width: 768px) {
+  .switcher {
+    margin: 3rem 0 0 0;
+  }
+}
 </style>

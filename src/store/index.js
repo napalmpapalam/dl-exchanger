@@ -31,6 +31,17 @@ export default new Vuex.Store({
     },
     updateServiceCurrencyID(state, serviceCurrencyID) {
       state.serviceCurrencyID = serviceCurrencyID;
+    },
+    updateInputValue(state, inputValue) {
+      state.inputValue = inputValue;
+    },
+    updateValidationState(state, boolean) {
+      state.isValidated = boolean;
+    },
+    clearForm(state, emptyString) {
+      state.clientCurrencyID = emptyString;
+      state.serviceCurrencyID = emptyString;
+      state.inputValue = emptyString;
     }
   },
   state: {
@@ -38,6 +49,8 @@ export default new Vuex.Store({
     currenciesID: [],
     clientCurrencyID: "",
     serviceCurrencyID: "",
+    inputValue: "",
+    isValidated: null,
     reserve: {
       BTC: 4.1,
       ETH: 18.5,
@@ -60,6 +73,23 @@ export default new Vuex.Store({
     },
     getReserve(state) {
       return state.reserve;
+    },
+    getInputValue(state) {
+      return state.inputValue;
+    },
+    getConvertedValue(state) {
+      let client = state.clientCurrencyID;
+      let service = state.serviceCurrencyID;
+
+      if (client && service) {
+        let rate = state.currencies[client][service];
+        let result = state.inputValue * rate;
+        //округление
+        return +result.toFixed(2);
+      }
+    },
+    getValidationState(state) {
+      return state.isValidated;
     }
   }
 });
