@@ -37,11 +37,6 @@ export default new Vuex.Store({
     },
     updateValidationState(state, boolean) {
       state.isValidated = boolean;
-    },
-    clearForm(state, emptyString) {
-      state.clientCurrencyID = emptyString;
-      state.serviceCurrencyID = emptyString;
-      state.inputValue = emptyString;
     }
   },
   state: {
@@ -84,7 +79,6 @@ export default new Vuex.Store({
       if (client && service) {
         let rate = state.currencies[client][service];
         let result = state.inputValue * rate;
-        //округление
         return +result.toFixed(2);
       }
     },

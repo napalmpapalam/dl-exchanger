@@ -1,12 +1,45 @@
 <template>
-  <button class="switcher">
-    <span class="material-icons">autorenew</span>
-  </button>
+  <div>
+    <button type="button" class="switcher" @click="go">
+      <span class="material-icons" disabled>autorenew</span>
+    </button>
+  </div>
 </template>
 
 <script>
+import { mapGetters } from "vuex";
 export default {
-  name: "SwitchButton"
+  // data: function() {
+  //   return {
+  //     type: null,
+  //     button: null
+  //   };
+  // },
+  computed: {
+    ...mapGetters([
+      "allCurrencies",
+      "allCurrenciesID",
+      "getClientCurrencyID",
+      "getServiceCurrencyID",
+      "getInputValue",
+      "getConvertedValue",
+      "getValidationState",
+      "getReserve"
+    ])
+  },
+  name: "SwitchButton",
+  methods: {
+    go: function() {
+      let clientCurrencyID = this.getClientCurrencyID;
+      let serviceCurrencyID = this.getServiceCurrencyID;
+      let inputValue = this.getConvertedValue;
+      if (clientCurrencyID && serviceCurrencyID && this.getInputValue > 0) {
+        this.$store.commit("updateClientCurrencyID", serviceCurrencyID);
+        this.$store.commit("updateServiceCurrencyID", clientCurrencyID);
+        this.$store.commit("updateInputValue", inputValue);
+      }
+    }
+  }
 };
 </script>
 
