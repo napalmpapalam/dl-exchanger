@@ -6,7 +6,6 @@
       tag="md-button"
       class="md-raised md-primary"
       type="submit"
-      @md-end="clearForm()"
       >ОБМЕНЯТЬ СУММУ</router-link
     >
     <router-link
@@ -31,11 +30,6 @@ export default {
       get: function() {
         return this.getValidationState;
       }
-    }
-  },
-  methods: {
-    clearForm() {
-      this.$store.commit("clearForm", "");
     }
   }
 };

@@ -7,9 +7,9 @@
       </div>
       <h1>Поздравляем!</h1>
       <h2>
-        Вы успешно обменяли: {{ getInputValue }} {{ getClientCurrencyID }} на
-        {{ getConvertedValue }}
-        {{ getServiceCurrencyID }}
+        Вы успешно обменяли: {{ clientCurrency }} {{ clientCurrencyID }} на
+        {{ serviceCurrency }}
+        {{ serviceCurrencyID }}
       </h2>
     </section>
   </div>
@@ -25,8 +25,36 @@ export default {
       "getClientCurrencyID",
       "getServiceCurrencyID",
       "getInputValue",
-      "getConvertedValue"
-    ])
+      "getServiceValue"
+    ]),
+    clientCurrency: {
+      get: function() {
+        const VALUE = this.getInputValue;
+        this.$store.commit("updateInputValue", "");
+        return VALUE;
+      }
+    },
+    clientCurrencyID: {
+      get: function() {
+        const ID = this.getClientCurrencyID;
+        this.$store.commit("updateClientCurrencyID", "");
+        return ID;
+      }
+    },
+    serviceCurrency: {
+      get: function() {
+        const VALUE = this.getServiceValue;
+        this.$store.commit("updateServiceValue", "");
+        return VALUE;
+      }
+    },
+    serviceCurrencyID: {
+      get: function() {
+        const ID = this.getServiceCurrencyID;
+        this.$store.commit("updateServiceCurrencyID", "");
+        return ID;
+      }
+    }
   },
   components: {
     Header
